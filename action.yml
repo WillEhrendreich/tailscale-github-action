@@ -7,6 +7,9 @@ branding:
   icon: "arrow-right-circle"
   color: "gray-dark"
 inputs:
+  sudo:
+    description: "For local runners, if you need a sudo pass, you can put it here "
+    required: false
   authkey:
     description: "Your Tailscale authentication key, from the admin panel."
     required: false
