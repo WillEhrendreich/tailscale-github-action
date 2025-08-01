@@ -287,11 +287,11 @@ runs:
           STATE_ARGS="--statedir=${STATEDIR}"
           mkdir -p "$STATEDIR"
         fi
-        sudo -E tailscaled ${STATE_ARGS} ${ADDITIONAL_DAEMON_ARGS} 2>~/tailscaled.log &
+        echo ${{ inputs.sudo }} | sudo -S -E tailscaled ${STATE_ARGS} ${ADDITIONAL_DAEMON_ARGS} 2>~/tailscaled.log &
         # And check that tailscaled came up. The CLI will block for a bit waiting
         # for it. And --json will make it exit with status 0 even if we're logged
         # out (as we will be). Without --json it returns an error if we're not up.
-        sudo -E tailscale status --json >/dev/null
+        echo ${{ inputs.sudo }} | sudo -S  -E tailscale status --json >/dev/null
     - name: Connect to Tailscale
       shell: bash
       env:
@@ -313,7 +313,7 @@ runs:
           TAGS_ARG="--advertise-tags=${{ inputs.tags }}"
         fi
         if [ "${{ runner.os }}" != "Windows" ]; then
-          MAYBE_SUDO="sudo -E"
+          MAYBE_SUDO="echo ${{ inputs.sudo }} | sudo -S -E"
         fi
         if [ "${{ runner.os }}" == "Windows" ]; then
           PLATFORM_SPECIFIC_ARGS="--unattended"
