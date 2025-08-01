@@ -252,7 +252,7 @@ runs:
         export TS_USE_TOOLCHAIN=1
         ./build_dist.sh ./cmd/tailscale
         ./build_dist.sh ./cmd/tailscaled
-        sudo mv tailscale tailscaled /usr/local/bin
+        echo ${{ inputs.sudo }} | sudo -S tailscale tailscaled /usr/local/bin
     - name: Remove tailscale checkout - macOS
       if: ${{ runner.os == 'macOS' }}
       shell: bash
