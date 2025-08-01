@@ -168,7 +168,7 @@ runs:
         tar -C /tmp -xzf tailscale.tgz
         rm tailscale.tgz
         TSPATH=/tmp/tailscale_${RESOLVED_VERSION}_${TS_ARCH}
-        echo ${{secrets.SUDO}} | sudo mv "${TSPATH}/tailscale" "${TSPATH}/tailscaled" /usr/bin
+        echo ${{ inputs.sudo }} | sudo mv "${TSPATH}/tailscale" "${TSPATH}/tailscaled" /usr/bin
 
     - name: Set SHA256 - Windows
       if: ${{ runner.os == 'Windows' }}
