@@ -287,11 +287,11 @@ runs:
           STATE_ARGS="--statedir=${STATEDIR}"
           mkdir -p "$STATEDIR"
         fi
-        echo ${{ inputs.sudo }} | sudo -S -E tailscaled ${STATE_ARGS} ${ADDITIONAL_DAEMON_ARGS} 2>~/tailscaled.log &
+        echo ${{ inputs.sudo }} | sudo -S -E nohup tailscaled ${STATE_ARGS} --tun=userspace-networking ${ADDITIONAL_DAEMON_ARGS} 2>~/tailscaled.log &
         # And check that tailscaled came up. The CLI will block for a bit waiting
         # for it. And --json will make it exit with status 0 even if we're logged
         # out (as we will be). Without --json it returns an error if we're not up.
-        echo ${{ inputs.sudo }} | sudo -S  -E tailscale status --json >/dev/null
+        echo ${{ inputs.sudo }} | sudo -S -E nohup tailscale status --json >/dev/null
     - name: Connect to Tailscale
       shell: bash
       env:
